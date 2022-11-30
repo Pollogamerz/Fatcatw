@@ -9,6 +9,8 @@ public class AbuelaScript : MonoBehaviour
     public float chronometer;
     public Quaternion angle;
     public float grade;
+    public Animation idle;
+    public Animation atack;
 
     void Start()
     {
