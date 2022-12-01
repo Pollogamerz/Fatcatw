@@ -25,6 +25,10 @@ public class ManipuladorVida : MonoBehaviour
                 currentDamageTime = 0.0f;
             }
     }
+        if(other.tag == "Player")
+            {
+            Destroy(gameObject);
+        }
 
         }
 }

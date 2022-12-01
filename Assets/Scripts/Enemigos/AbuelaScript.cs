@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class AbuelaScript : MonoBehaviour
 {
-    public GameObject target;
+    public GameObject GatoBola;
     public int rutine;
     public float chronometer;
     public Quaternion angle;
     public float grade;
-    public Animation idle;
-    public Animation atack;
 
     void Start()
     {
-        target = GameObject.Find("Player");
+        GatoBola = GameObject.Find("Player");
     }
 
     void Update()
@@ -24,7 +22,7 @@ public class AbuelaScript : MonoBehaviour
 
     public void Enemie_Behavior()
     {
-        if (Vector3.Distance(transform.position, target.transform.position) > 5)
+        if (Vector3.Distance(transform.position, GatoBola.transform.position) > 2)
         {
             chronometer += 1 * Time.deltaTime;
             if (chronometer >= 4)
@@ -50,7 +48,7 @@ public class AbuelaScript : MonoBehaviour
 
         else
         {
-            var lookPos = target.transform.position - transform.position;
+            var lookPos = GatoBola.transform.position - transform.position;
             lookPos.y = 0;
             var rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 3);
