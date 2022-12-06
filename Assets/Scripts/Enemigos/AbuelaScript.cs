@@ -12,7 +12,7 @@ public class AbuelaScript : MonoBehaviour
 
     void Start()
     {
-        GatoBola = GameObject.Find("Player");
+        GatoBola = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()
