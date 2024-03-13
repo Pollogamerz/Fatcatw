@@ -24,8 +24,8 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Inicio");
     }
 
-    public void Cats()
+    public void Tutorial()
     {
-        SceneManager.LoadScene("Cats");
+        SceneManager.LoadScene("Tutorial");
     }
 }
