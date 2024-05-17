@@ -9,7 +9,6 @@ public class BolaMove : NetworkBehaviour
     private Rigidbody rb;
     public float speed;
     public float maxSpeed;
-    public GameObject referencia;
     bool floorDetected = false;
     bool isJump = false;
     public float jumpForce = 10f;
@@ -52,8 +51,9 @@ public class BolaMove : NetworkBehaviour
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 
-        rb.AddForce(moverHorizontal * referencia.transform.right * speed);
-        rb.AddForce(moverVertical * referencia.transform.forward * speed);
+        // Usando la orientación del mundo.
+        rb.AddForce(moverHorizontal * Vector3.right * speed);
+        rb.AddForce(moverVertical * Vector3.forward * speed);
 
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down), Color.black);
     }
@@ -75,7 +75,8 @@ public class BolaMove : NetworkBehaviour
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 
-        rb.AddForce(moverHorizontal * referencia.transform.right * speed);
-        rb.AddForce(moverVertical * referencia.transform.forward * speed);
+        // Usando la orientación del mundo.
+        rb.AddForce(moverHorizontal * Vector3.right * speed);
+        rb.AddForce(moverVertical * Vector3.forward * speed);
     }
 }
