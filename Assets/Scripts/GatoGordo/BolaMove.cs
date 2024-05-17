@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Object;
+using FishNet.Transporting;
 
-public class BolaMove : MonoBehaviour
+public class BolaMove : NetworkBehaviour
 {
     private Rigidbody rb;
     public float speed;
@@ -38,6 +40,8 @@ public class BolaMove : MonoBehaviour
             print("No hay contacto con el suelo");
         }
     }
+
+
     void FixedUpdate()
     {
         float moverHorizontal = Input.GetAxis("Horizontal");
@@ -48,13 +52,30 @@ public class BolaMove : MonoBehaviour
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 
+        rb.AddForce(moverHorizontal * referencia.transform.right * speed);
         rb.AddForce(moverVertical * referencia.transform.forward * speed);
-        rb.AddForce(moverHorizontal * referencia.transform.forward * speed);
 
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down), Color.black);
+    }
 
+    [ObserversRpc]
+    void JumpClientRpc()
+    {
+        if (isJump && floorDetected)
+        {
+            rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+        }
+    }
 
+    [ServerRpc]
+    void MoveServerRpc(float moverHorizontal, float moverVertical)
+    {
+        if (rb.velocity.magnitude > maxSpeed)
+        {
+            rb.velocity = rb.velocity.normalized * maxSpeed;
+        }
 
-
+        rb.AddForce(moverHorizontal * referencia.transform.right * speed);
+        rb.AddForce(moverVertical * referencia.transform.forward * speed);
     }
 }
