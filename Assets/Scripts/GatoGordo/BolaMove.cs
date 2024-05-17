@@ -51,9 +51,9 @@ public class BolaMove : NetworkBehaviour
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 
-        // Usando la orientación del mundo.
-        rb.AddForce(moverHorizontal * Vector3.right * speed);
-        rb.AddForce(moverVertical * Vector3.forward * speed);
+        // Usando la orientación de la cámara.
+        Vector3 moveDirection = (Camera.main.transform.forward * moverVertical + Camera.main.transform.right * moverHorizontal).normalized;
+        rb.AddForce(moveDirection * speed);
 
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down), Color.black);
     }
@@ -75,8 +75,8 @@ public class BolaMove : NetworkBehaviour
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 
-        // Usando la orientación del mundo.
-        rb.AddForce(moverHorizontal * Vector3.right * speed);
-        rb.AddForce(moverVertical * Vector3.forward * speed);
+        // Usando la orientación de la cámara.
+        Vector3 moveDirection = (Camera.main.transform.forward * moverVertical + Camera.main.transform.right * moverHorizontal).normalized;
+        rb.AddForce(moveDirection * speed);
     }
 }
