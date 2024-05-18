@@ -5,6 +5,7 @@ using UnityEngine;
 public class AbuelaScript : MonoBehaviour
 {
     public GameObject GatoBola;
+    public GameObject GaboBolacopia;
     public int rutine;
     public float chronometer;
     public Quaternion angle;
@@ -23,6 +24,30 @@ public class AbuelaScript : MonoBehaviour
     public void Enemie_Behavior()
     {
         if (Vector3.Distance(transform.position, GatoBola.transform.position) > 2)
+        {
+            chronometer += 1 * Time.deltaTime;
+            if (chronometer >= 4)
+            {
+                rutine = Random.Range(0, 2);
+                chronometer = 0;
+            }
+
+            switch (rutine)
+            {
+                case 0:
+                    grade = Random.Range(0, 360);
+                    angle = Quaternion.Euler(0, grade, 0);
+                    rutine++;
+                    break;
+
+                case 1:
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, angle, 0.5f);
+                    transform.Translate(Vector3.forward * 1 * Time.deltaTime);
+                    break;
+            }
+        }
+
+        if (Vector3.Distance(transform.position, GaboBolacopia.transform.position) > 2)
         {
             chronometer += 1 * Time.deltaTime;
             if (chronometer >= 4)

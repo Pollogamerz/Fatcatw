@@ -1,78 +1,92 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using FishNet.Object;
 using FishNet.Transporting;
+using FishNet.Connection;
+using FishNet.Object;
 
 public class BolaMove : NetworkBehaviour
 {
-    private Rigidbody rb;
-    public float speed;
-    public float maxSpeed;
-    bool floorDetected = false;
-    bool isJump = false;
-    public float jumpForce = 10f;
+    [Header("Base setup")]
+    public float walkingSpeed = 7.5f;
+    public float runningSpeed = 11.5f;
+    public float jumpSpeed = 8.0f;
+    public float gravity = 20.0f;
+    public float lookSpeed = 2.0f;
+    public float lookXLimit = 45.0f;
 
-    void Start()
+    CharacterController characterController;
+    Vector3 moveDirection = Vector3.zero;
+    float rotationX = 0;
+
+    [HideInInspector]
+    public bool canMove = true;
+
+    [SerializeField]
+    private float cameraYOffset = 0.4f;
+    private Camera playerCamera;
+
+
+    public override void OnStartClient()
     {
-        rb = GetComponent<Rigidbody>();
-    }
-
-    private void Update()
-    {
-        isJump = Input.GetButtonDown("Jump");
-
-        if (isJump && floorDetected)
+        base.OnStartClient();
+        if (base.IsOwner)
         {
-            rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
-        }
-        Vector3 floor = transform.TransformDirection(Vector3.down);
-
-        if (Physics.Raycast(transform.position, floor, 0.5f))
-        {
-            floorDetected = true;
+            playerCamera = Camera.main;
+            playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
+            playerCamera.transform.SetParent(transform);
         }
         else
         {
-            floorDetected = false;
+            gameObject.GetComponent<PlayerController>().enabled = false;
         }
     }
 
-
-    void FixedUpdate()
+    void Start()
     {
-        float moverHorizontal = Input.GetAxis("Horizontal");
-        float moverVertical = Input.GetAxis("Vertical");
+        characterController = GetComponent<CharacterController>();
 
-        if (rb.velocity.magnitude > maxSpeed)
-        {
-            rb.velocity = rb.velocity.normalized * maxSpeed;
-        }
-
-
-        Vector3 moveDirection = (Camera.main.transform.forward * moverVertical + Camera.main.transform.right * moverHorizontal).normalized;
-        rb.AddForce(moveDirection * speed);
-
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down), Color.black);
+        // Lock cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
-    [ObserversRpc]
-    void JumpClientRpc()
+    void Update()
     {
-        if (isJump && floorDetected)
-        {
-            rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
-        }
-    }
+        bool isRunning = false;
 
-    [ServerRpc]
-    void MoveServerRpc(float moverHorizontal, float moverVertical)
-    {
-        if (rb.velocity.magnitude > maxSpeed)
+        isRunning = Input.GetKey(KeyCode.LeftShift);
+
+        Vector3 forward = transform.TransformDirection(Vector3.forward);
+        Vector3 right = transform.TransformDirection(Vector3.right);
+
+        float curSpeedX = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Vertical") : 0;
+        float curSpeedY = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Horizontal") : 0;
+        float movementDirectionY = moveDirection.y;
+        moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+
+        if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
         {
-            rb.velocity = rb.velocity.normalized * maxSpeed;
+            moveDirection.y = jumpSpeed;
         }
-        Vector3 moveDirection = (Camera.main.transform.forward * moverVertical + Camera.main.transform.right * moverHorizontal).normalized;
-        rb.AddForce(moveDirection * speed);
+        else
+        {
+            moveDirection.y = movementDirectionY;
+        }
+
+        if (!characterController.isGrounded)
+        {
+            moveDirection.y -= gravity * Time.deltaTime;
+        }
+
+        characterController.Move(moveDirection * Time.deltaTime);
+
+        if (canMove && playerCamera != null)
+        {
+            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+        }
     }
 }
