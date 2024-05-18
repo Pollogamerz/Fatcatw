@@ -28,15 +28,13 @@ public class BolaMove : NetworkBehaviour
         }
         Vector3 floor = transform.TransformDirection(Vector3.down);
 
-        if (Physics.Raycast(transform.position, floor, 1f))
+        if (Physics.Raycast(transform.position, floor, 0.5f))
         {
             floorDetected = true;
-            print("Contacto con el suelo");
         }
         else
         {
             floorDetected = false;
-            print("No hay contacto con el suelo");
         }
     }
 
@@ -51,7 +49,7 @@ public class BolaMove : NetworkBehaviour
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 
-        // Usando la orientación de la cámara.
+
         Vector3 moveDirection = (Camera.main.transform.forward * moverVertical + Camera.main.transform.right * moverHorizontal).normalized;
         rb.AddForce(moveDirection * speed);
 
@@ -74,8 +72,6 @@ public class BolaMove : NetworkBehaviour
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
-
-        // Usando la orientación de la cámara.
         Vector3 moveDirection = (Camera.main.transform.forward * moverVertical + Camera.main.transform.right * moverHorizontal).normalized;
         rb.AddForce(moveDirection * speed);
     }
