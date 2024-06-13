@@ -8631,6 +8631,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7443408887813606050, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
+      propertyPath: _logging
+      value: 
+      objectReference: {fileID: 11400000, guid: 5ccbb594858afb947bc1f88253965691, type: 2}
+    - target: {fileID: 7443408887813606050, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
       propertyPath: _spawnablePrefabs
       value: 
       objectReference: {fileID: 11400000, guid: 0c6afe56f97cedf4b895497156b9ee24, type: 2}
@@ -8660,7 +8664,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7443408887813606049, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1360736116}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7443408887813606051, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1840745552}
   m_SourcePrefab: {fileID: 100100000, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
 --- !u!1 &1760599745
 GameObject:
@@ -9036,6 +9043,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 38f74cd884cda8242b4fdc167c4962f8, type: 3}
   m_PrefabInstance: {fileID: 1809689131}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1840745548 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7443408887813606051, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
+  m_PrefabInstance: {fileID: 1757475448}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1840745552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840745548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f48f002b825cbd45a19bd96d90f9edb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dontRoute: 0
+  _unreliableMtu: 1023
+  _ipv4BindAddress: 
+  _enableIpv6: 1
+  _ipv6BindAddress: 
+  _port: 7770
+  _maximumClients: 4095
+  _clientAddress: localhost
 --- !u!1 &1855458349
 GameObject:
   m_ObjectHideFlags: 0
