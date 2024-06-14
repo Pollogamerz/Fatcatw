@@ -164,7 +164,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c78b9ee666895b24e8501cdd3b5f4930, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3498494771246241618}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c78b9ee666895b24e8501cdd3b5f4930, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4207965054414327332}
   m_SourcePrefab: {fileID: 100100000, guid: c78b9ee666895b24e8501cdd3b5f4930, type: 3}
+--- !u!1 &4671249846786831172 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1207320968265806016, guid: c78b9ee666895b24e8501cdd3b5f4930, type: 3}
+  m_PrefabInstance: {fileID: 5769912642438071172}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6688884672929447637 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c78b9ee666895b24e8501cdd3b5f4930, type: 3}
@@ -253,13 +261,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6688884672929447637}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7dc134261f7bbd8458c20b5c8e267993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   vida: 100
-  barraDevida: {fileID: 0}
+  barraDevida: {fileID: 5848983338381140853, guid: 9c1def1a2c6afd944a4422bee2f840c3, type: 3}
+  gameOverPanel: {fileID: 2971414859300705677, guid: e3cddc10c8d43444b9f15084aeefad88, type: 3}
+  respawnButton: {fileID: 2427209219303675194, guid: 1d16228904ee3b7459dad687dfd9071f, type: 3}
 --- !u!114 &3288911852046393145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +302,7 @@ MonoBehaviour:
   - {fileID: 8091490069696286276}
   - {fileID: 1074538703655953521}
   - {fileID: 3498494771246241618}
+  - {fileID: 4207965054414327332}
   <SerializedRootNetworkBehaviour>k__BackingField: {fileID: 0}
   <NestedRootNetworkBehaviours>k__BackingField: []
   SerializedTransformProperties:
@@ -306,7 +317,7 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 12
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 584410112
+  _scenePathHash: 0
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 17405160268800619197
 --- !u!114 &1074538703655953521
@@ -369,4 +380,28 @@ MonoBehaviour:
   _componentIndexCache: 2
   _addedNetworkObject: {fileID: 416219248503552997}
   _networkObjectCache: {fileID: 416219248503552997}
-  velocity: 0
+  walkingSpeed: 7.5
+  runningSpeed: 11.5
+  jumpSpeed: 8
+  gravity: 20
+  lookSpeed: 2
+  lookXLimit: 45
+  canMove: 1
+  cameraYOffset: 0.4
+--- !u!114 &4207965054414327332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6688884672929447637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed9a3d12079a7e549a59d2499273dc7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 3
+  _addedNetworkObject: {fileID: 416219248503552997}
+  _networkObjectCache: {fileID: 416219248503552997}
+  body: {fileID: 4671249846786831172}
+  endColor: {r: 0.254717, g: 0.254717, b: 0.254717, a: 0}
